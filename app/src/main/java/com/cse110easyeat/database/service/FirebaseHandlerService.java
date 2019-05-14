@@ -20,7 +20,6 @@ public class FirebaseHandlerService implements DatabaseHandlerService {
 
     /* Function to connect to database */
     public void connectToDatabase() {
-        // FirebaseApp.initialize - can we actually wrap this
         dataQueryList = new ArrayList<User>();
         firebaseDb = FirebaseDatabase.getInstance();
         DatabaseReference dbConnection = firebaseDb.getReference();
