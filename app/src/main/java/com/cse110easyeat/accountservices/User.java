@@ -6,5 +6,14 @@ public class User {
     String password;
     String firstName;
     String lastName;
+    String userName;
 //    String[] favoriteRestaurants;
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getId() {
+        return userId;
+    }
 }
