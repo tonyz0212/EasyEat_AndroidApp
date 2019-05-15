@@ -7,8 +7,6 @@ public interface APIHandlerService {
     // Spit out the whole API call result
     String getRestaurantInfo();
 
-
-
-
     // Perform a call
 }
+
