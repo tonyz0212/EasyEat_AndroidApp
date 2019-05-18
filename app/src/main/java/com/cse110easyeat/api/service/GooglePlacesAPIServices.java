@@ -1,22 +1,22 @@
 package com.cse110easyeat.api.service;
 
-import com.cse110easyeat.easyeat;
-import android.permission.INTERNET;
-import com.squareup.okhttp.*;
-
 import com.cse110easyeat.easyeat.BuildConfig;
+import com.cse110easyeat.network.listener.NetworkListener;
+import com.cse110easyeat.network.manager.NetworkVolleyManager;
+
 import android.content.Context;
 import android.util.Log;
 
 
 public class GooglePlacesAPIServices implements APIHandlerService {
+    private NetworkVolleyManager requestManager;
     private static final String TAG = "GooglePlacesAPIServices";
 
     private static final String apiRequestURL = "https://maps.googleapis.com/maps/api/place" +
             "/textsearch/json?&query=%s&key=%s&location=%f,%f&radius=%f";
 
-    public void initializeAPIClient() {
-
+    public void initializeAPIClient(Context ctx) {
+        requestManager = NetworkVolleyManager.getInstance(ctx);
     }
 
     // add minprice, maxprice opennow
@@ -26,7 +26,7 @@ public class GooglePlacesAPIServices implements APIHandlerService {
         String result = "";
         /* Replace whitespace with plus buttons */
         String modifiedQueryString = queryString.replaceAll("\\s+","+");
-        String url = String.format(apiRequestURL, queryString, BuildConfig.PLACES_API_KEY,
+        String url = String.format(apiRequestURL, modifiedQueryString, BuildConfig.PLACES_API_KEY,
                 latitude, longitude, radius);
 
         if (minPrice > 0 && minPrice <= 4) {
@@ -39,18 +39,16 @@ public class GooglePlacesAPIServices implements APIHandlerService {
             url += maxPrice;
         }
 
-        // Send the payload
-//        try {
-//            Request apiRequest = new Request.Builder().url(url).build();
-//            Response apiResponse = apiClientHandler.newCall(apiRequest).execute();
-//            result = apiResponse.body().toString();
-//            Log.i(TAG, "Api call result" + result);
-//        } catch(Exception e) {
-//            Log.e(TAG, "Exception when calling api" + e.toString());
-//        }
+        // TODO: Think of the flow
+        requestManager.postRequestAndReturnString(url, new NetworkListener<String>() {
+            @Override
+            public void getResult(String result) {
+                if (result != null) {
+                    Log.d(TAG, "The API call is: \n" + result);
+                }
+            }
+        });
 
         return result;
     }
-
-
 }

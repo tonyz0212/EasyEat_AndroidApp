@@ -12,7 +12,7 @@ import com.android.volley.toolbox.Volley;
 import com.cse110easyeat.network.listener.NetworkListener;
 
 /* Singleton class to handle Volley HTTP requests(resolve threading issues) */
-public class NetworkVolleyManager {
+public class NetworkVolleyManager implements NetworkManagerService {
     private static NetworkVolleyManager managerInstance;
     private RequestQueue requestQueue;
     private static Context applicationContext;
