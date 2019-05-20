@@ -12,7 +12,7 @@
         android:layout_width="113dp"
         android:layout_height="108dp"
         android:background="@android:color/white"
-        android:src="@drawable/Picture1" />
+        android:src="@drawable/picture1" />
 
     <TextView
         android:layout_width="wrap_content"
