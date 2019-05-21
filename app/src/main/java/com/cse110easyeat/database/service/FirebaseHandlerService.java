@@ -39,7 +39,7 @@ public class FirebaseHandlerService implements DatabaseHandlerService {
     }
 
     /* Function to read data from Firebase */
-    public ArrayList<User> getDataFromDatabase(final String userName) {
+    public ArrayList<User> getDataFromDatabase(final String userId) {
         dataQueryList.clear();
         DatabaseReference dbReference = firebaseDb.getReference("Users");
         dbReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -47,17 +47,9 @@ public class FirebaseHandlerService implements DatabaseHandlerService {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
-                    for (DataSnapshot userIdNodes : dataSnapshot.getChildren()) {
-                        // do something with the individual "issues"
-                        Log.d(TAG, "test nodes: " + userIdNodes.child("userName").getValue());
-                        Log.d(TAG, "test nodes key: " + userIdNodes.getKey());
-                        if (userIdNodes.child("userName").getValue().equals(userName)) {
-                            User userFound = userIdNodes.getValue(User.class);
-                            dataQueryList.add(userFound);
-                            Log.d(TAG, "snapshot exists" + " Data Query Testing");
-                            Log.d(TAG, "onDataChange of query" + userFound.getId());
-                            break;
-                        }
+                    if (dataSnapshot.child(userId).exists()) {
+                        User userFound = dataSnapshot.child(userId).getValue(User.class);
+                        dataQueryList.add(userFound);
                     }
                 } else {
                     Log.d(TAG, "onDataChange of query " + "Snapshot does not exists");
@@ -81,18 +73,11 @@ public class FirebaseHandlerService implements DatabaseHandlerService {
                 DatabaseReference dbCon = firebaseDb.getReference("Users");
                 boolean unique = true;
                 dataQueryList.clear();
-                if (dataSnapshot.exists()) {
-                    // LOOP THROUGH
-                    for (DataSnapshot userIdNodes : dataSnapshot.getChildren()) {
-                        // do something with the individual "issues"
-                        if (userIdNodes.child("userName").getValue().equals(data.getUserName())) {
-                            User userFound = userIdNodes.getValue(User.class);
-                            dataQueryList.add(userFound);
-                            Log.d(TAG, "snapshot exists" + " Data Query Testing");
-                            unique = false;
-                            break;
-                        }
-                    }
+                if (dataSnapshot.child(data.getId()).exists()) {
+                    User userFound = dataSnapshot.child(data.getId()).getValue(User.class);
+                    dataQueryList.add(userFound);
+                    Log.d(TAG, "snapshot exists" + " Data Query Testing");
+                    unique = false;
                 }
 
                 if (unique) {
