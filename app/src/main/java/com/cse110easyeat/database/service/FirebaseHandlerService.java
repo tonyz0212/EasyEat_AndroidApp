@@ -81,7 +81,7 @@ public class FirebaseHandlerService implements DatabaseHandlerService {
                 }
 
                 if (unique) {
-                    String userId = dbCon.push().getKey();
+                    String userId = data.getId();
                     dbCon.child(userId).setValue(data);
                     dataQueryList.add(data);
                     Log.d(TAG, "Writing to DB since it's not a duplicate");
