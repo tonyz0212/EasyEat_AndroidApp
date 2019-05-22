@@ -10,7 +10,7 @@ public class User {
 
     public User(String email, String password, String firstName, String lastName) {
         String modifiedEmailStr = email.replaceAll(".","_");
-        this.userId = modifiedEmailStr + "_" + firstName;
+        this.userId = modifiedEmailStr;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
