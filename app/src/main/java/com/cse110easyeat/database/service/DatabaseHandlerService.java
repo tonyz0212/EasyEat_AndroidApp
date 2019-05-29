@@ -8,5 +8,5 @@ public interface DatabaseHandlerService {
     void connectToDatabase();
 
     boolean writeToDatabase(final User data);
-    ArrayList<User> getDataFromDatabase(final String userName);
+    ArrayList<User> getDataFromDatabase(final String userId);
 }
