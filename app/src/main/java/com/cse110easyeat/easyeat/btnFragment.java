@@ -49,7 +49,7 @@ public class btnFragment extends Fragment {
                 .setSwipeDecor(new SwipeDecor()
                         .setPaddingTop(20)
                         .setRelativeScale(0.01f)
-                        .setSwipeInMsgLayoutId(R.layout.tinder_swipe_out_msg_view)
+                        .setSwipeInMsgLayoutId(R.layout.tinder_swipe_in_msg_view)
                         .setSwipeOutMsgLayoutId(R.layout.tinder_swipe_out_msg_view));
 
 //        for(Profile profile : Utils.loadProfiles(getActivity().getApplicationContext())){
