@@ -4,15 +4,13 @@ public class User {
     String userId;
     String email;
     String password;
-    String firstName;
-    String lastName;
+    String fullName;
 //    String[] favoriteRestaurants;
 
-    public User(String email, String password, String firstName, String lastName) {
+    public User(String email, String password, String fullName) {
         String modifiedEmailStr = email.replaceAll(".","_");
         this.userId = modifiedEmailStr;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.fullName = fullName;
         this.password = password;
         this.email = email;
     }
@@ -20,13 +18,10 @@ public class User {
     // Empty default ctor for Firebase
     public User() {}
 
-    public String firstName() {
-        return firstName;
-    }
     public String getId() {
         return userId;
     }
     public String getEmail() {return email;}
     public String getPassword() {return password;}
-    public String getLastName() {return lastName;}
+    public String getFullName() {return fullName;}
 }

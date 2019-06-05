@@ -132,7 +132,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
         android:gravity="center"
-        android:padding="5dp"
+        android:padding="2dp"
         android:text="@string/newUser"
         android:textColor="@color/white"
         android:textSize="15sp" />

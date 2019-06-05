@@ -19,10 +19,8 @@ public class GooglePlacesAPIServices implements APIHandlerService {
         requestManager = NetworkVolleyManager.getInstance(ctx);
     }
 
-    // add minprice, maxprice opennow
-    // Check if price is an option
-    public String getRestaurantInfo(String queryString, int minPrice, int maxPrice,
-                                    float latitude, float longitude, float radius) {
+    public String generateAPIQueryURL(String queryString, int minPrice, int maxPrice,
+                                      float latitude, float longitude, float radius) {
         String result = "";
         /* Replace whitespace with plus buttons */
         String modifiedQueryString = queryString.replaceAll("\\s+","+");
@@ -39,6 +37,17 @@ public class GooglePlacesAPIServices implements APIHandlerService {
             url += maxPrice;
         }
 
+        return url;
+    }
+
+
+    // add minprice, maxprice opennow
+    // Check if price is an option
+    public String getRestaurantInfo(String queryString, int minPrice, int maxPrice,
+                                    float latitude, float longitude, float radius) {
+
+        String result = "";
+        String url = generateAPIQueryURL(queryString, minPrice, maxPrice, latitude, longitude, radius);
         // TODO: Think of the flow
         requestManager.postRequestAndReturnString(url, new NetworkListener<String>() {
             @Override

@@ -22,12 +22,12 @@ public class EasyEatController {
 
     /* Constructors - use the corresponding injectors */
     public EasyEatController(Context ctx) {
+        apiService = new GooglePlacesAPIServices();
+        apiService.initializeAPIClient(ctx);
         // Replace this injector if need to change
         DatabaseHandlerInjector dbInjector = new FirebaseHandlerInjector();
         databaseService = dbInjector.getDataBaseHandlerService();
-        // Injector for API handler
-        apiService = new GooglePlacesAPIServices();
-        apiService.initializeAPIClient(ctx);
+        databaseService.connectToDatabase();
     }
 
     // Login function that verifies information
@@ -53,7 +53,11 @@ public class EasyEatController {
     }
 
     // Display
-
+    public void registerUser(String email, String password, String fullName) {
+        User newUser = new User(email, password, fullName);
+        databaseService.writeToDatabase(newUser);
+        Log.d(TAG, "Registered a new user");
+    }
 
 
 
