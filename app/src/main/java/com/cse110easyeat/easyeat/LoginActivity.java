@@ -32,9 +32,6 @@ public class LoginActivity extends Activity {
     private FirebaseAuth mAuth;
     private CheckBox showPassword;
 
-//    private DrawerLayout dl;
-//    private ActionBarDrawerToggle abdt;
-
     private TextView signUpLink;
 
     private ProgressDialog progressBar;

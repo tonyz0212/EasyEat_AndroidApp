@@ -125,7 +125,7 @@ public class inputFragment extends Fragment implements LocationListener {
                     Log.d(TAG, "Latitude: " + latitude);
 
                     // TODO: HARD CODE COORDINATES
-                    String queryURL = apiHelper.generateAPIQueryURL("restaurant nearby", budget,
+                    String queryURL = apiHelper.generateAPIQueryURL("restaurant nearby", 1,
                             budget, 32.8801f, -117.2340f, distance);
                     networkManager.postRequestAndReturnString(queryURL, new NetworkListener<String>() {
                         @Override
@@ -164,12 +164,19 @@ public class inputFragment extends Fragment implements LocationListener {
                 timeField.getText().toString().matches("")) {
             Log.d(TAG, "One of the input fields is empty");
             progressCircle.hide();
-            Toast.makeText(getActivity(), "Please fill all the fields", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "Please fill all the fields",
+                    Toast.LENGTH_SHORT).show();
             return false;
         }
 
         try {
             budget = Integer.parseInt(budgetField.getText().toString());
+            if (budget <= 0 || budget > 4) {
+                progressCircle.hide();
+                Toast.makeText(getActivity(), "Please enter budget between 1-4",
+                        Toast.LENGTH_SHORT).show();
+                return false;
+            }
             distance = Integer.parseInt(distanceField.getText().toString());
             timeToWait = Integer.parseInt(timeField.getText().toString());
         } catch (NumberFormatException e) {

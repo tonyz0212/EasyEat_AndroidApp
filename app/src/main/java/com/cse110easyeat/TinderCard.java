@@ -42,8 +42,8 @@ public class TinderCard {
     @Resolve
     private void onResolved(){
         Glide.with(mContext).load(mProfile.getImageUrl()).into(profileImageView);
-        nameAgeTxt.setText(mProfile.getName() + "\n" + mProfile.getRestaurantRating());
-        locationNameTxt.setText(mProfile.getDistanceFromCurLoc());
+        nameAgeTxt.setText("Name: " + mProfile.getName() + "\nRating: " + mProfile.getRestaurantRating());
+        locationNameTxt.setText("Distance: " + mProfile.getDistanceFromCurLoc());
     }
 
     @SwipeOut
