@@ -143,6 +143,8 @@ public class inputFragment extends Fragment implements LocationListener {
                             ft.replace(R.id.mainFragment, fragClass);
                             // or ft.add(R.id.your_placeholder, new FooFragment());
                             // Complete the changes added above
+                            progressCircle.hide();
+                            progressCircle.dismiss();
                             ft.commit();
                         }
                     });
@@ -171,6 +173,7 @@ public class inputFragment extends Fragment implements LocationListener {
             distance = Integer.parseInt(distanceField.getText().toString());
             timeToWait = Integer.parseInt(timeField.getText().toString());
         } catch (NumberFormatException e) {
+            progressCircle.hide();
             Toast.makeText(getActivity(), "Please enter integers", Toast.LENGTH_SHORT).show();
             return false;
         }
