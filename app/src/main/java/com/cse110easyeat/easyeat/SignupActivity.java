@@ -12,6 +12,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cse110easyeat.controller.EasyEatController;
+import com.cse110easyeat.database.service.FirebaseHandlerService;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -35,7 +36,7 @@ public class SignupActivity extends Activity {
     private String password;
     private String verifyPassword;
 
-    //private EasyEatController backendController;
+//    private EasyEatController backendController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class SignupActivity extends Activity {
         setContentView(R.layout.signup_layout);
         Log.d(TAG, "created activity");
         // Create firebase user
+        Log.d(TAG, "TEST");
         mAuth = FirebaseAuth.getInstance();
         fullNameField = (EditText) findViewById(R.id.fullName);
         passwordField = (EditText) findViewById(R.id.password);
@@ -52,7 +54,7 @@ public class SignupActivity extends Activity {
         signUpButton = (Button) findViewById(R.id.signUpBtn);
 
         // TODO: INTEGRATE IT WITH FIREBASE
-       // backendController = new EasyEatController(getApplicationContext());
+       //backendController = new EasyEatController(getApplicationContext());
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override

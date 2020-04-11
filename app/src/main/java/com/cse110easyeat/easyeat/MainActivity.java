@@ -90,10 +90,13 @@ public class MainActivity extends AppCompatActivity {
                     // Complete the changes added above
                     ft.commit();
                 }
-                else if (id == R.id.history){
-                    Toast.makeText(MainActivity.this, "History", Toast.LENGTH_SHORT);
-
-                }
+//                else if (id == R.id.history){
+//                    Toast.makeText(MainActivity.this, "History", Toast.LENGTH_SHORT);
+//                    // TODO: TEST PAGE TEST
+//                    FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+//                    ft.replace(R.id.mainFragment, new swipeCardFragment());
+//                    ft.commit();
+//                }
                 else if (id == R.id.logout){
                     Toast.makeText(MainActivity.this, "Log Out", Toast.LENGTH_SHORT);
                     authenticator = FirebaseAuth.getInstance();
@@ -126,36 +129,6 @@ public class MainActivity extends AppCompatActivity {
         // or ft.add(R.id.your_placeholder, new FooFragment());
         // Complete the changes added above
         ft.commit();
-
-//        mSwipeView = (SwipePlaceHolderView)findViewById(R.id.swipeView);
-//        mContext = getApplicationContext();
-//
-//        mSwipeView.getBuilder()
-//                .setDisplayViewCount(3)
-//                .setSwipeDecor(new SwipeDecor()
-//                        .setPaddingTop(20)
-//                        .setRelativeScale(0.01f)
-//                        .setSwipeInMsgLayoutId(R.layout.tinder_swipe_in_msg_view)
-//                        .setSwipeOutMsgLayoutId(R.layout.tinder_swipe_out_msg_view));
-//
-//
-//        for(Profile profile : Utils.loadProfiles(this.getApplicationContext())){
-//            mSwipeView.addView(new TinderCard(mContext, profile, mSwipeView));
-//        }
-//
-//        findViewById(R.id.rejectBtn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mSwipeView.doSwipe(false);
-//            }
-//        });
-//
-//        findViewById(R.id.acceptBtn).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mSwipeView.doSwipe(true);
-//            }
-//        });
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
     }
@@ -173,4 +146,24 @@ public class MainActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
     }
+
+    // TRYING TO SAVE FRAGMENT INSTANCES
+//    public void onCreate(Bundle savedInstanceState) {
+//    ...
+//        if (savedInstanceState != null) {
+//            //Restore the fragment's instance
+//            mContent = getSupportFragmentManager().getFragment(savedInstanceState, "myFragmentName");
+//        ...
+//        }
+//    ...
+//    }
+//
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        super.onSaveInstanceState(outState);
+//
+//        //Save the fragment's instance
+//        getSupportFragmentManager().putFragment(outState, "myFragmentName", mContent);
+//    }
+
 }

@@ -63,16 +63,21 @@ public class inputFragment extends Fragment implements LocationListener {
     private LocationManager locationManager;
     private LocationListener tracker;
 
+    // TODO: WHY IS IT NOT ENDING
+    // TODO: IMAGE IS STILL A BIT TOO LARGE
+    // TODO: onPostExecute
     private JSONArray writeDataToJsonFile(String apiResult) {
-        JSONArray arrToWrite = new JSONArray();
+        final JSONArray arrToWrite = new JSONArray();
         try {
-            JSONObject jsonResult = new JSONObject(apiResult);
+            final JSONObject jsonResult = new JSONObject(apiResult);
             JSONArray resultsArr = jsonResult.getJSONArray("results");
             Log.d(TAG, "parsed result array: \n" + resultsArr.toString());
             // TODO: EXTRACT THE RATING, NAME, DISTANCE, IMAGE URL
-            // TODO: USE PLACES PHOTO API
-            // TODO: WRITE TO CACHE FILES
+            // TODO: USE DISTANCE MATRIX API TO GET DISTANCE
+            // TODO: EXTRACT FORMATED ADDRESS FIELD
+            // TODO: GET THE PLACE_ID
             for (int i = 0; i < resultsArr.length(); i++) {
+                Log.d(TAG, "Results length: " + resultsArr.length());
                 JSONObject restaurantRes = resultsArr.getJSONObject(i);
                 jsonResult.put("name", restaurantRes.getString("name"));
                 // TODO: figure out how to get distance
@@ -80,10 +85,31 @@ public class inputFragment extends Fragment implements LocationListener {
                 jsonResult.put("rating", restaurantRes.getString("rating"));
 
                 String photoRef = restaurantRes.getJSONArray("photos").getJSONObject(0).getString("photo_reference");
-                String height = restaurantRes.getJSONArray("photos").getJSONObject(0).getString("height");
-                String width = restaurantRes.getJSONArray("photos").getJSONObject(0).getString("width");
+//                String height = restaurantRes.getJSONArray("photos").getJSONObject(0).getString("height");
+//                String width = restaurantRes.getJSONArray("photos").getJSONObject(0).getString("width");
+
+                String height = "225";
+                String width = "225";
+
+                String address = restaurantRes.getString("formatted_address");
+                String placeId = restaurantRes.getString("place_id");
+                String totalNumRatings = restaurantRes.getString("user_ratings_total");
+
                 String imageURL = generateImageURL(photoRef, height, width);
+                float currentLat = 32.8801f;
+                float currentLong = -117.2340f;
+
                 jsonResult.put("url", imageURL);
+                String distanceURL = generateDistanceURL(currentLat, currentLong, placeId);
+                // USE THIS TO GET DISTANCE
+//                networkManager.postRequestAndReturnString(distanceURL, new NetworkListener<String>() {
+//                    @Override
+//                    public void getResult(String result) {
+//                        Log.d(TAG, "Distance API Call result: \n" + result);
+//                        arrToWrite.put(jsonResult.toString());
+//                    }
+//                });
+//                arrToWrite.put(jsonResult.toString());
                 arrToWrite.put(jsonResult.toString());
             }
 
@@ -212,6 +238,8 @@ public class inputFragment extends Fragment implements LocationListener {
         }
     }
 
+    // TODO: REFACTOR THESE METHODS
+    // URL GENERATOR HELPER METHODS
     public String generateImageURL(String photoReference, String height, String width) {
         String imageURL = "https://maps.googleapis.com/maps/api/place/photo?key=%s&photoreference=%s&maxheight=%s&maxwidth=%s";
         imageURL = String.format(imageURL, BuildConfig.PLACES_API_KEY, photoReference,
@@ -219,6 +247,13 @@ public class inputFragment extends Fragment implements LocationListener {
         return imageURL;
     }
 
+    public String generateDistanceURL(float currentLat, float currentLong, String destinationId) {
+        String distanceURL = "https://maps.googleapis.com/maps/api/distancematrix/json?origins=%f,%f" +
+                "&destinations=place_id:%s&units=imperial&key=%s";
+        distanceURL = String.format(distanceURL, currentLat, currentLong, destinationId,
+                BuildConfig.PLACES_API_KEY);
+        return distanceURL;
+    }
 
     // TODO: IMPLEMENT GET LOCATION METHODS
     @Override
